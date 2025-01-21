@@ -1,0 +1,54 @@
+<!-- templates/admin/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <nav>
+        <h1>Admin Dashboard</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <section id="system-overview">
+            <h2>System Overview</h2>
+            <!-- Tambahkan informasi sistem di sini -->
+        </section>
+
+        <section id="dataset-management">
+            <h2>Dataset Management</h2>
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('manage_dataset') }}">
+                <div class="form-group">
+                    <label>Disease Label:</label>
+                    <input type="text" name="label" required>
+                </div>
+                <div class="form-group">
+                    <label>Image:</label>
+                    <input type="file" name="image" accept="image/*" required>
+                </div>
+                <button type="submit">Upload New Data</button>
+            </form>
+
+            <!-- Tabel untuk menampilkan dataset yang ada -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Image Count</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data akan diisi dari backend -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

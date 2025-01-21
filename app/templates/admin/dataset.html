@@ -1,0 +1,31 @@
+<!-- templates/admin/dataset.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Dataset</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <h1>Manage Dataset</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('admin_dashboard') }}" class="nav-btn">Dashboard</a>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <h2>Upload New Training Data</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Disease Label:</label>
+                <input type="text" name="label" required>
+            </div>
+            <div class="form-group">
+                <label>Image:</label>
+                <input type="file" name="image" accept="image/*" required>
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</body>
+</html>

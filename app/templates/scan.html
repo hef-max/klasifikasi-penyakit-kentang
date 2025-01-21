@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Potato Disease Scanner</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="scan-page">
+    <!-- Background Overlay -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Header Section -->
+    <header class="scan-header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="potato-icon">🥔</span>
+            </div>
+            <h1>Potato Disease Scanner</h1>
+            <p class="subtitle">Smart Detection System for Potato Plant Health</p>
+        </div>
+    </header>
+
+    <!-- Main Scanner Section -->
+    <main class="scanner-container">
+        <div class="scanner-wrapper">
+            <div class="video-container">
+                <div class="scan-border">
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                    <div class="upload-area">
+                        {% if prediction %}
+                            <img src="{{ url_for('static', filename=prediction.image_path) }}" alt="Uploaded image" class="preview-image">
+                        {% else %}
+                            <form method="POST" enctype="multipart/form-data" class="upload-form">
+                                <input type="file" name="file" accept=".jpg,.jpeg,.png" class="file-input">
+                                <button type="submit" class="upload-btn">Scan Image</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scan-info">
+                {% if prediction %}
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="icon">📋</span>
+                        <h3>Diagnosis & Solusi</h3>
+                    </div>
+                    <div id="diagnosisResult">
+                        <p style="margin-bottom: 1rem;">
+                            <strong>Diagnosis:</strong> {{ prediction.class }}<br>
+                            <strong>Tingkat Prediksi:</strong> {{ prediction.confidence }}%
+                        </p>
+                    </div>
+                    <div id="solutionList">
+                        <strong>Solusi:</strong>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            {% for solution in prediction.solutions %}
+                            <li style="margin-bottom: 0.5rem;">{{ solution }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card" style="margin-top: 1rem;">
+                    <a href="{{ url_for('index') }}" class="scan-again-btn">Scan Gambar Lain</a>
+                </div>
+                {% else %}
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="icon">📋</span>
+                        <h3>Scanner Guide</h3>
+                    </div>
+                    <ul class="guide-list">
+                        <li><span class="step">1</span> Upload foto daun kentang yang jelas</li>
+                        <li><span class="step">2</span> Pastikan foto diambil dengan pencahayaan yang baik</li>
+                        <li><span class="step">3</span> Tunggu hasil analisis sistem</li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="scan-footer">
+        <div class="footer-content">
+            <p>Developed for Better Potato Farming</p>
+            <small>AI-Powered Disease Detection System</small>
+        </div>
+    </footer>
+</body>
+</html>
